@@ -21,15 +21,15 @@ CLOBBER.include(SRC_FILES.ext(".pdf"))
 desc "Default deploy task."
 task :default => :deploy
 
-desc "Build and deploy documents to #{DISTDIR}"
-task :deploy => [:remove_diskdir, :texx, :copy_files, :clobber] do
+desc "Build and deploy documents to #{DISTDIR} directory."
+task :deploy => [:remove_distdir, :texx, :copy_files, :clobber] do
   puts "Distribution to #{DISTDIR} has completed."
 end
 
-desc "Remove ${DISKDIR}"
-task :remove_diskdir do
-  puts "\n" "Removing ${DISTDIR}."
-  FileUtils.rmdir DISTDIR
+desc "Remove #{DISTDIR} directory."
+task :remove_distdir do
+  puts "\n" "Removing #{DISTDIR}."
+  FileUtils.rm_r DISTDIR, :force => true, :verbose => true
 end
 
 desc "Compile tex to pdf."

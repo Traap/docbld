@@ -17,14 +17,14 @@ function docbld() {
 ## Use
 ```
 $ docbld -T
-  rake clean           # Remove any temporary products
-  rake clobber         # Remove any generated files
-  rake copy_files      # Copy files to _build
-  rake default         # Default deploy task 
-  rake deploy          # Build and deploy documents to _build
-  rake list_files      # List texx files to compile
-  rake remove_diskdir  # Remove ${DISKDIR}
-  rake texx            # Compile tex to pdf
+  rake clean           # Remove any temporary products.
+  rake clobber         # Remove any generated files.
+  rake copy_files      # Copy files to _build directory.
+  rake default         # Default deploy task.
+  rake deploy          # Build and deploy documents to _build directory.
+  rake list_files      # List texx files to compile.
+  rake remove_diskdir  # Remove _build directory.
+  rake texx            # Compile tex to pdf.
 ```
 
 ## Convention
