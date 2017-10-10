@@ -8,7 +8,8 @@ require 'rake/clean'
 DISTDIR = '_build'
 
 TMP_FILES = ["aux", "bbl", "blg", "dep", "fdb_latexmk", "fls", "glg", "glo",
-             "gls", "glsdefs", "ist", "log", "out", "src", "toc","xwm"]
+             "gls", "glsdefs", "ist", "log", "nav", "out", "src", "snm", "toc",
+             "xwm"]
 
 SRC_FILES = Rake::FileList.new("**/*.texx") do |fl|
   TMP_FILES.each do |e|
