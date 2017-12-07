@@ -9,8 +9,16 @@ $ git clone git@github.com:Traap/docbld.git
 
 ## Add this function to .bashrc
 ```bash
+DOCBLDPATH=${HOME}/git/docbld $1
+
+export DOCBLDPATH
+
 function docbld() {
-  rake -- rakefile ${HOME}/docbld/Rakefile $1
+  rake --rakefile ${DOCBLDPATH}/Rakefile $1
+}
+
+function newdoc() {
+  ${DOCBLDPATH}/bin/newdoc $1 $2 $3
 }
 ```
 
