@@ -1,0 +1,17 @@
+\documentclass[12pt]{tlc-article}
+
+\begin{document}
+  \tlcTitlePageAndTableOfContents
+    {%docnbr \\ %doctitle}
+    {Author name.}
+    {Write your abstract.}
+
+  \section{Purpose}
+  Define the purpose of this document.
+
+  \section{Scope}
+  Define the scope of this document.
+
+  \input{change-summary.tex}
+
+\end{document}
