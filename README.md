@@ -1,15 +1,15 @@
-# docbld - Document Build 
+## docbld - Document Build 
 The **docbld** repository simplifies compiling LaTeX files into pdf documents.
 
-## Installation
+### Installation
 ```bash
 $ cd $HOME
 $ git clone git@github.com:Traap/docbld.git
 ```
 
-## Add this function to .bashrc
+### Add this function to .bashrc
 ```bash
-DOCBLDPATH=${HOME}/git/docbld $1
+DOCBLDPATH=${HOME}/git/docbld
 
 export DOCBLDPATH
 
@@ -22,7 +22,7 @@ function newdoc() {
 }
 ```
 
-## Use
+### Use
 ```
 $ docbld -T
   rake clean           # Remove any temporary products.
@@ -35,11 +35,11 @@ $ docbld -T
   rake texx            # Compile tex to pdf.
 ```
 
-## Convention
+### Convention
 **docbld** recursively searches the current directory for files with a texx 
 extension.  Upon finding them, it compiles them into pdf documents,  moves 
 the pdf documents to the **_build** directory, and eliminates temporary files.
 
-# Project Management
+## Project Management
 Please refer to my [Lightweight Project Mangement](https://github.com/Traap/lpm)
 for the project management strategy I use.
