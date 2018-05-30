@@ -1,3 +1,13 @@
-% tlc-article includes this file when it is present.  You may choose to add
-% additional LaTeX layout, commands, and anything else that aids the construction
-% of your document.
+% ------------------------------------------------------------------------------
+% autodocDir MUST point to your github/traap/autodoc location.
+\def\autodocDir{../autodoc}
+
+% ------------------------------------------------------------------------------
+% Hook into boilerplate definitions.
+\input{\autodocDir/boilerplate/project-directories.tex}
+
+% ------------------------------------------------------------------------------
+% Set table of contents depth.   The standard is three and I want four. 
+\setcounter{tocdepth}{4}
+
+% ------------------------------------------------------------------------------
