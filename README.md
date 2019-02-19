@@ -17,13 +17,6 @@ function docbld() {
   rake --rakefile ${DOCBLDPATH}/Rakefile $1
 }
 
-function newdoc() {
-  ${DOCBLDPATH}/bin/newdoc $1 $2 $3
-}
-
-function newdata() {
-  ${DOCBLDPATH}/bin/newdata
-}
 ```
 
 ### Use
