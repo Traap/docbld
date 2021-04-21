@@ -36,7 +36,3 @@ $ docbld -T
 **docbld** recursively searches the current directory for files with a texx 
 extension.  Upon finding them, it compiles them into pdf documents,  moves 
 the pdf documents to the **_build** directory, and eliminates temporary files.
-
-## Project Management
-Please refer to my [Lightweight Project Mangement](https://github.com/Traap/lpm)
-for the project management strategy I use.
