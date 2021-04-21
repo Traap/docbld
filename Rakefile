@@ -1,4 +1,4 @@
-# Copyright (c) 2017, Gary A. Howard
+# Copyright (c) 2021, Gary A. Howard
 # BSD-3-Clause
 # https://github.com/Traap/docbld/blob/master/LICENSE
 # -----------------------------------------------------------------------------
@@ -8,9 +8,9 @@ require 'rake/clean'
 
 DISTDIR = '_build'
 
-TMP_FILES = ["aux", "bbl", "blg", "dep", "fdb_latexmk", "fls", "glg", "glo",
-             "gls", "glsdefs", "ist", "log", "nav", "out", "src", "snm", 
-             "synctex.gz", "toc", "xwm"]
+TMP_FILES = ["acn", "acr", "alg", "aux", "bbl", "blg", "dep", "dvi",
+             "fdb_latexmk", "fls", "glg", "glo", "gls", "glsdefs", "ist", "log",
+             "nav", "out", "out.ps", "src", "snm", "synctex.gz", "toc", "xwm"]
 
 SRC_FILES = Rake::FileList.new("**/*.texx") do |fl|
   TMP_FILES.each do |e|
@@ -44,7 +44,11 @@ task :copy_files do
   puts "\nCopying files to #{DISTDIR}."
   FileUtils.mkdir_p DISTDIR 
   CLOBBER.each do |f|
-    cp f, DISTDIR + "/" + File.basename(f), :verbose => true
+    begin
+      cp f, DISTDIR + "/" + File.basename(f), :verbose => true
+    rescue StandardError => e
+      puts "ERROR: " + File.basename(f) + " was not copied."
+    end
   end
 end
 
@@ -56,7 +60,7 @@ end
 rule ".pdf" => ".texx" do |t|
   puts "Compiling #{t.source}."
   begin
-    command = "latexmk -pdf -quiet -silent -cd #{t.source}"
+    command = "latexmk -pdf -synctex=1 -verbose -file-line-error -cd #{t.source}"
     _stdout, stderr, _status = Open3.capture3 command
   rescue StandardError => e
     echo_exception(stderr, e)
