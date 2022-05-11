@@ -9,7 +9,7 @@ require 'open3'
 require 'rake'
 require 'rake/clean'
 
-DISTDIR = '_build'.freez
+DISTDIR = '_build'
 
 # File extensions created by latexmk and htlatex.
 TMP_FILES = [
