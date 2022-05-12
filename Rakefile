@@ -43,9 +43,6 @@ task :remove_distdir do
   puts ''
 end
 
-desc 'Compile tex to pdf.'
-task texx: SRC_FILES.ext('.pdf')
-
 desc "Copy files to #{DISTDIR}"
 task :copy_files do
   puts "\nCopying files to #{DISTDIR}."
@@ -62,13 +59,46 @@ task :list_files do
   puts SRC_FILES
 end
 
+desc 'Compile tex to pdf.'
+task texx: SRC_FILES.ext('.pdf')
+
 rule '.pdf' => '.texx' do |t|
-  puts "Compiling #{t.source}."
+  puts "Compiling #{t.source} with latexmk."
   begin
     command = "latexmk -pdf -synctex=1 -verbose -file-line-error -cd #{t.source}"
     _stdout, stderr, _status = Open3.capture3 command
   rescue StandardError => e
     echo_exception(stderr, e)
+  end
+
+  def echo_exception(_stderr, exception)
+    puts "Exception Class: #{exception.class.name}"
+    puts "Exception Message: #{exception.class.message}"
+    puts "Exception Backtrace: #{exception.class.backtrace}"
+  end
+end
+
+desc 'Compile tex to docx.'
+task html: SRC_FILES.ext('.docx')
+
+rule '.docx' => '.texx' do |t|
+  puts "Compiling #{t.source} with htlatex."
+  begin
+    command = "htlatex #{t.source}"
+    puts command
+    _stdout, stderr, _status = Open3.capture3 command
+  rescue StandardError => e
+    echo_exception(stderr, e)
+    exit
+  end
+
+  begin
+    command = "pandoc #{t.name.ext('.html')} -o #{t.name.ext('.docx')}"
+    puts command
+    _stdout, stderr, _status = Open3.capture3 command
+  rescue StandardError => e
+    echo_exception(stderr, e)
+    exit
   end
 
   def echo_exception(_stderr, exception)
