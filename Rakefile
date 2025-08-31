@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# {{{ Copyright (c) 2021, Gary A. Howard
+# {{{ Copyright (c) 2025, Gary A. Howard
 #     BSD-3-Clause
 #     hhttps://github.com/Traap/docbld/blob/master/LICENSE
 # ------------------------------------------------------------------------- }}}
@@ -9,6 +9,18 @@
 require 'open3'
 require 'rake'
 require 'rake/clean'
+require 'rbconfig'
+
+# ------------------------------------------------------------------------- }}}
+# {{{ Windows check.
+
+def windows?
+  host = RbConfig::CONFIG['host_os'].downcase
+  host.include?('mswin') ||
+  host.include?('mingw') ||
+  host.include?('cygwin') ||
+  host.include?('windows')
+end
 
 # ------------------------------------------------------------------------- }}}
 # {{{ Echo any exception.
@@ -76,7 +88,7 @@ task deploy: %i[remove_distdir texx copy_files clobber] do
 end
 
 # ------------------------------------------------------------------------- }}}
-# {{{ Task: remvoe_distdir
+# {{{ Task: remove_distdir
 
 desc "Remove #{DISTDIR} directory."
 task :remove_distdir do
@@ -114,8 +126,25 @@ desc 'Compile tex to pdf.'
 task texx: SRC_FILES.ext('.pdf')
 
 rule '.pdf' => '.texx' do |t|
+  # directory of the .texx
+  src_dir = File.dirname(t.source)
+
+  # "filename" from "filename.texx"
+  base    = File.basename(t.source, File.extname(t.source))
+
+  tex     = File.join(src_dir, "#{base}.texx")
+  pdf     = File.join(src_dir, "#{base}.pdf")
+
   puts "Compiling #{t.name.ext('.pdf')}."
-  run_command "latexmk -pdf -synctex=1 -verbose -file-line-error -cd #{t.source}"
+  run_command %(latexmk -pdf -synctex=1 -verbose -file-line-error -cd "#{tex}")
+
+  if windows?
+    puts " ... Making glossary for #{t.name.ext('.pdf')}."
+    run_command %(makeglossaries -d "#{src_dir}" "#{base}")
+
+    puts " ... Adding glossary to #{t.name.ext('.pdf')}."
+    run_command %(latexmk -pdf -synctex=1 -file-line-error -cd "#{tex}")
+  end
 end
 
 # ------------------------------------------------------------------------- }}}
