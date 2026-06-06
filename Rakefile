@@ -2,9 +2,9 @@
 
 # {{{ Copyright (c) 2025, Gary A. Howard
 #     BSD-3-Clause
-#     hhttps://github.com/Traap/docbld/blob/master/LICENSE
+#     https://github.com/Traap/docbld/blob/master/LICENSE
 # ------------------------------------------------------------------------- }}}
-# {{{ Requried files.
+# {{{ Required files.
 
 require 'open3'
 require 'rake'
@@ -100,7 +100,7 @@ end
 # ------------------------------------------------------------------------- }}}
 # {{{ Task: copy_files
 
-desc "Copy files to #{DISTDIR}"
+desc "Copy files to #{DISTDIR}."
 task :copy_files do
   puts "\nCopying files to #{DISTDIR}."
   FileUtils.mkdir_p DISTDIR
@@ -122,14 +122,14 @@ end
 # ------------------------------------------------------------------------- }}}
 # {{{ Task: texx
 
-desc 'Compile tex to pdf.'
+desc 'Compile TeX to PDF.'
 task texx: SRC_FILES.ext('.pdf')
 
 rule '.pdf' => '.texx' do |t|
-  # directory of the .texx
+  # Directory of the .texx file.
   src_dir = File.dirname(t.source)
 
-  # "filename" from "filename.texx"
+  # "filename" from "filename.texx".
   base    = File.basename(t.source, File.extname(t.source))
 
   tex     = File.join(src_dir, "#{base}.texx")
@@ -150,7 +150,7 @@ end
 # ------------------------------------------------------------------------- }}}
 # {{{ Task: docx
 
-desc 'Compile tex to docx.'
+desc 'Compile TeX to DOCX.'
 task docx: SRC_FILES.ext('.docx')
 
 rule '.docx' => '.texx' do |t|
